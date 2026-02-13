@@ -6,15 +6,15 @@ public class CustomerWithOrdersResponse {
     private Long id;
     private String name;
     private String email;
-    private List<OrderResponse> orders;
+    private List<OrderResponse> orders_items;
 
     public CustomerWithOrdersResponse() { }
 
-    public CustomerWithOrdersResponse(Long id, String name, String email, List<OrderResponse> orders) {
+    public CustomerWithOrdersResponse(Long id, String name, String email, List<OrderResponse> orders_items) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.orders = orders;
+        this.orders_items = orders_items;
     }
 
     public Long getId() {
@@ -41,11 +41,11 @@ public class CustomerWithOrdersResponse {
         this.email = email;
     }
 
-    public List<OrderResponse> getOrders() {
-        return orders;
+    public List<OrderResponse> getOrders_items() {
+        return orders_items;
     }
 
-    public void setOrders(List<OrderResponse> orders) {
-        this.orders = orders;
+    public void setOrders_items(List<OrderResponse> orders_items) {
+        this.orders_items = orders_items;
     }
 }

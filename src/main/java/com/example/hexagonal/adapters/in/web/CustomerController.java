@@ -66,20 +66,20 @@ public class CustomerController {
         Customer c = getCustomerUseCase.getById(id);
         return ResponseEntity.ok(new CustomerResponse(c.getId(), c.getName(), c.getEmail()));
     }
-@Operation(summary = "Obtener cliente con órdenes", description = "Obtiene un cliente con todas sus órdenes asociadas")
     
+    @Operation(summary = "Obtener cliente con órdenes", description = "Obtiene un cliente con todas sus órdenes asociadas")
     @GetMapping("/{id}/with-orders")
     public ResponseEntity<CustomerWithOrdersResponse> getWithOrders(@PathVariable Long id) {
         return customerRepository.findByIdWithOrders(id)
                 .map(customerWithOrders -> {
                     List<OrderResponse> orderResponses = customerWithOrders.orders.stream()
-                            .map(order -> new OrderResponse(
-                                    order.getId(),
-                                    order.getCustomerId(),
-                                    order.getDescription(),
-                                    order.getAmount(),
-                                    order.getStatus(),
-                                    order.getCreatedAt()
+                            .map(orders_items -> new OrderResponse(
+                                    orders_items.getId(),
+                                    orders_items.getCustomerId(),
+                                    orders_items.getDescription(),
+                                    orders_items.getAmount(),
+                                    orders_items.getStatus(),
+                                    orders_items.getCreatedAt()
                             ))
                             .collect(Collectors.toList());
                     
@@ -93,15 +93,15 @@ public class CustomerController {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
-@Operation(summary = "Actualizar cliente", description = "Actualiza los datos de un cliente existente")
     
+    @Operation(summary = "Actualizar cliente", description = "Actualiza los datos de un cliente existente")
     @PutMapping("/{id}")
     public ResponseEntity<CustomerResponse> update(@PathVariable Long id, @RequestBody com.example.hexagonal.application.dto.UpdateCustomerCommand cmd) {
         Customer updated = updateCustomerUseCase.update(id, cmd);
         return ResponseEntity.ok(new CustomerResponse(updated.getId(), updated.getName(), updated.getEmail()));
     }
-@Operation(summary = "Eliminar cliente", description = "Elimina un cliente del sistema")
     
+    @Operation(summary = "Eliminar cliente", description = "Elimina un cliente del sistema")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         deleteCustomerUseCase.delete(id);
